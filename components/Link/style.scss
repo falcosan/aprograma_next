@@ -1,0 +1,17 @@
+.link {
+    @apply h-full cursor-pointer;
+    &-parent {
+        @apply block;
+    }
+    &-child {
+        @apply flex items-center justify-center self-center;
+    }
+    &-active {
+        &_text {
+            @apply opacity-40 font-semibold;
+        }
+        &_icon {
+            @apply pt-0.5 border-b-2 border-gray-300;
+        }
+    }
+}

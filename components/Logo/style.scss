@@ -1,0 +1,11 @@
+.logo {
+    &-image {
+        @apply max-w-full max-h-full mx-auto my-0 cursor-pointer;
+        &_a.fade {
+            @apply transform origin-[50%_40%] rotate-[360deg] transition duration-700 ease-out;
+        }
+        &_p.fade {
+            @apply transform origin-center rotate-[360deg] transition duration-700 ease-out;
+        }
+    }
+}

@@ -1,0 +1,43 @@
+@mixin headings {
+  @for $index from 1 through 6 {
+    h#{$index} {
+      @content;
+    }
+  }
+}
+
+@layer base {
+  @include headings {
+    @apply mb-5 mt-0;
+  }
+
+  li {
+    @include headings {
+      @apply m-0;
+    }
+  }
+
+  h1 {
+    @apply leading-tight;
+    font-size: clamp(2.16rem, 1.47rem + 1.73vw, 4.24rem);
+  }
+  h2 {
+    @apply leading-snug;
+    font-size: clamp(1.8rem, 1.4rem + 1vw, 3rem);
+  }
+  h3 {
+    @apply leading-normal;
+    font-size: clamp(1.5rem, 1.29rem + 0.52vw, 2.12rem);
+  }
+  h4 {
+    @apply leading-relaxed;
+    font-size: clamp(1.25rem, 1.17rem + 0.21vw, 1.6rem);
+  }
+  h5 {
+    @apply leading-[1.7] font-semibold;
+    font-size: clamp(1.04rem, 1.04rem + 0.02vw, 1.05rem);
+  }
+  h6 {
+    @apply leading-[1.775] font-semibold;
+  }
+}

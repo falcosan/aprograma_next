@@ -1,0 +1,18 @@
+.page {
+    @apply p-5;
+    &-title {
+        @apply mb-5 text-xl sm:text-2xl break-words;
+    }
+    &-content {
+        @apply relative flex flex-wrap -m-2.5;
+        &_component {
+            @apply flex;
+            &[class*='_slider'] {
+                @apply overflow-hidden;
+            }
+            &[class*='_not-blank'] {
+                @apply m-2.5;
+            }
+        }
+    }
+}

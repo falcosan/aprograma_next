@@ -1,0 +1,12 @@
+.header {
+    @apply sm:flex sm:flex-wrap sm:justify-between sm:items-center;
+    &-links {
+        @apply flex justify-center;
+        & > .link-parent {
+            @apply mx-2.5;
+        }
+    }
+    &-translate {
+        @apply flex justify-center;
+    }
+}

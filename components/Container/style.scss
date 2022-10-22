@@ -1,0 +1,226 @@
+.container {
+    &-cover {
+        @apply w-full;
+        &.parent-cover {
+            @apply relative;
+        }
+        &.child-cover {
+            @apply grid;
+        }
+    }
+    &-title {
+        @apply block break-words text-xl;
+        &_spaceless {
+            @apply m-5;
+        }
+        &_spaceful {
+            @apply my-5 ml-10 mr-5;
+        }
+        &_modeless {
+            @apply mb-5 sm:text-2xl;
+        }
+    }
+    &-content {
+        @apply h-full rounded;
+        &_slider {
+            @apply overflow-hidden;
+        }
+        & .slider-wrapper {
+            @apply relative;
+            &_dynamicMode {
+                @apply flex justify-center;
+            }
+            &_spaceless {
+                @apply p-5;
+            }
+            &_spaceful {
+                @apply px-5 pb-5;
+            }
+            & .previous-control,
+            & .next-control {
+                @apply absolute;
+                &.slider-control {
+                    @apply z-20 transform rounded-full bg-opacity-70 shadow-sm text-white bg-gray-500;
+                    &_slider {
+                        @apply top-1/2 -translate-y-1/2;
+                    }
+                    &_dynamicMode-dots {
+                        &--show {
+                            @apply bottom-3.5;
+                        }
+                        &--hide {
+                            @apply -bottom-3.5;
+                        }
+                    }
+                    &_containerMode {
+                        &-left {
+                            @apply left-2;
+                        }
+                        &-right {
+                            @apply right-2;
+                        }
+                        &-dots {
+                            &--show {
+                                @apply bottom-7;
+                            }
+                            &--hide {
+                                @apply -bottom-7;
+                            }
+                        }
+                    }
+                    &_sliderMode {
+                        &-left {
+                            &--small {
+                                @apply left-10;
+                            }
+                            &--big {
+                                @apply left-5;
+                            }
+                        }
+                        &-right {
+                            &--small {
+                                @apply right-10;
+                            }
+                            &--big {
+                                @apply right-5;
+                            }
+                        }
+                    }
+                }
+                &.carousel-control {
+                    @apply h-full w-full top-0 z-10;
+                    &:not(&.previous-control) {
+                        @apply -left-1/2;
+                    }
+                    &:not(&.next-control) {
+                        @apply -right-1/2;
+                    }
+                }
+            }
+            & .slider-box {
+                @apply w-full rounded;
+                &_dynamic {
+                    @apply overflow-hidden;
+                }
+                & .slider {
+                    &-list {
+                        @apply relative grid grid-flow-col-dense transition-transform;
+                    }
+                    &-slide {
+                        @apply flex justify-self-center rounded outline-none;
+                        & [class$='-component'] {
+                            @apply my-0 mx-auto;
+                        }
+                    }
+                }
+                & .carousel {
+                    &-list {
+                        @apply relative grid rounded;
+                    }
+                    &-slide {
+                        @apply w-full flex row-start-1 row-end-1 col-start-1 col-end-1 rounded outline-none transition-all duration-500;
+                        &.active-slide {
+                            @apply opacity-100;
+                            & > * {
+                                @apply relative z-10;
+                            }
+                            &.enter-right {
+                                animation: moveEnterRight 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                            }
+                            &.enter-left {
+                                animation: moveEnterLeft 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                            }
+                        }
+                        &.inactive-slide {
+                            @apply flex opacity-0 pointer-events-none cursor-none invisible;
+                            &.leave-right {
+                                animation: moveLeaveRight 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                            }
+                            &.leave-left {
+                                animation: moveLeaveLeft 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                            }
+                        }
+                        & [class$='-component'] {
+                            @apply my-0 mx-auto;
+                        }
+                    }
+                    &-container {
+                        & .dot {
+                            &-container {
+                                @apply relative w-max flex flex-wrap justify-center z-20 mt-10 mx-auto;
+                            }
+                            &-number {
+                                @apply w-2.5 h-2.5 inline-block m-1.5 rounded-full shadow-inner select-none cursor-pointer transform scale-90 transition-all duration-200;
+                                &_active {
+                                    @apply ring-2 ring-gray-400 bg-gray-500 bg-opacity-70;
+                                }
+                                &_inactive {
+                                    @apply bg-opacity-70 bg-gray-400;
+                                }
+                            }
+                            &-desktop {
+                                .dot-text {
+                                    @apply absolute w-5 h-5 flex justify-center items-center left-1/2 top-0 rounded-full text-xs opacity-0 pointer-events-none transform transition-opacity text-white bg-opacity-70 bg-gray-500;
+                                    transform: translate(-10.5px, -25px);
+                                }
+                                &:hover .dot-text {
+                                    @apply opacity-100;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &_container {
+            & .container-wrapper {
+                @apply h-full overflow-hidden;
+                & .container-box {
+                    @apply h-full flex flex-wrap rounded -m-2.5;
+                    &_spaceful {
+                        @apply p-5;
+                    }
+                    &_spaceless {
+                        @apply px-5 pb-5;
+                    }
+                    & .component_spaced {
+                        @apply m-2.5 rounded;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes moveEnterRight {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes moveEnterLeft {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes moveLeaveRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+@keyframes moveLeaveLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
