@@ -86,9 +86,7 @@ c10.4047,9.5513,14.9063,23.7646,15.5201,37.4688C514.0336,331.6145,507.1128,346.6
 export const Logo = (props: IProps) => {
   return props.internal?.link ? (
     <NavLink className="logo" href="/">
-      <a>
-        <Svg blok={props.blok} internal={props.internal} />
-      </a>
+      <Svg blok={props.blok} internal={props.internal} />
     </NavLink>
   ) : (
     <div className="logo">

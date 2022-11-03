@@ -1,6 +1,6 @@
 import { Layout } from "../layouts";
 import { uuidGenerator } from "../utils/number";
-import React, { useRef, useMemo, useLayoutEffect } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import {
   useLocale,
   useAsyncHook,
@@ -30,7 +30,7 @@ export default function App({ Component }) {
       );
     })[0];
   }, [result.story]);
-  useLayoutEffect(() => {
+  useEffect(() => {
     key.current = uuidGenerator();
   }, [locale]);
   useRemovesNullClass();

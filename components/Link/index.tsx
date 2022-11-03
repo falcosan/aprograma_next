@@ -3,16 +3,8 @@ import { Icon } from "../Icon";
 import { IProps } from "./props";
 import NavLink from "next/link";
 import { IProps as IconProps } from "../Icon/props";
-import { filterObjProperties } from "../../utils/object";
 
 export const Link = (props: IProps) => {
-  const importProps = <T extends object>(
-    itemProps: object,
-    listProps: string | string[],
-    exact: boolean
-  ) => {
-    return filterObjProperties<T>(itemProps, listProps, exact);
-  };
   const LinkType = props.blok.external_link
     ? (linkProps: any) => (
         <a
@@ -30,7 +22,6 @@ export const Link = (props: IProps) => {
     : (linkProps: any) => (
         <NavLink
           {...linkProps}
-          className={"ciao"}
           title={
             props.blok.title && props.blok.icon_item
               ? props.blok.title

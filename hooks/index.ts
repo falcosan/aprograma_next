@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../store";
 import { setterPosts } from "../store/posts";
 import { setterProjects } from "../store/projects";
-// import { manageLocalStorage } from '../utils/storage';
+import { manageLocalStorage } from "../utils/storage";
 import { filterObjProperties } from "../utils/object";
 import {
   useState,
@@ -26,17 +26,27 @@ export const useMutationObserver = (
 };
 
 export const useLocale = () => {
-  // const { setLocalData, getLocalData } = manageLocalStorage();
-  const setterUndefined = (value: string) => (value ? value : null);
-  const [lang, setLang] = useState("en");
-  const handler = useCallback((mutations: MutationRecord[]) => {
-    mutations.forEach(({ type, attributeName }) => {
-      if (type === "attributes" && attributeName === "lang") {
-        setLang(document.documentElement.lang);
-      }
-    });
-  }, []);
+  const { setLocalData, getLocalData } = manageLocalStorage();
+  const setterUndefined = (value: string) =>
+    value != null && !/undefined|null/.test(value) ? value : null;
+  const [lang, setLang] = useState(undefined);
 
+  const handler = useCallback(
+    (mutations: MutationRecord[]) => {
+      mutations.forEach(({ type, attributeName }) => {
+        if (type === "attributes" && attributeName === "lang") {
+          setLocalData("locale", document.documentElement.lang);
+          setLang(document.documentElement.lang);
+        }
+      });
+    },
+    [setLocalData]
+  );
+  useEffect(() => {
+    const currentLang = setterUndefined(getLocalData("locale")) ?? "en";
+    document.documentElement.setAttribute("lang", currentLang);
+    setLang(currentLang);
+  }, [getLocalData]);
   useMutationObserver("html", handler, { attributes: true });
   return lang;
 };
@@ -59,10 +69,9 @@ export function useAsyncHook(
 ) {
   const locale = useLocale();
   const [result, setResult] = useState<{ story: StoryData[] }>({ story: [] });
+  const storyblok = useStoryblokApi();
   useEffect(() => {
     (async () => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const storyblok = useStoryblokApi();
       const { data } = await storyblok.get(`cdn/stories/${slug}`, {
         ...options,
         language: locale,
@@ -75,7 +84,7 @@ export function useAsyncHook(
         )
       );
     })();
-  }, [locale]);
+  }, [locale, options, slug, storyblok]);
   return result;
 }
 
@@ -95,8 +104,8 @@ export function useGetWindowSize() {
     height: window.innerHeight,
   });
   const [windowSize, setWindowSize] = useState(getWindowSize());
-  const handleWindowResize = () => setWindowSize(getWindowSize());
   useEffect(() => {
+    const handleWindowResize = () => setWindowSize(getWindowSize());
     window.addEventListener("resize", handleWindowResize, false);
     return () =>
       window.removeEventListener("resize", handleWindowResize, false);
